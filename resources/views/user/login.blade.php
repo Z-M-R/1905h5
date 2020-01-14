@@ -381,7 +381,7 @@
                     </div>
                     <a href=""><h6>Forgot Password ?</h6></a>
                     <input type="submit" class="btn button-default" value="登录">
-{					{--<a href="" class="btn button-default">LOGIN</a>--}}
+					{{--<a href="" class="btn button-default">LOGIN</a>--}}
                 </form>
             </div>
         </div>
