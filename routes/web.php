@@ -17,4 +17,9 @@
 
 Route::get('/','Index\IndexController@index'); //网站首页
 
-Route::get('/user/reg','User\IndexController@reg'); //首页
+Route::get('/user/reg','User\IndexController@reg'); //注册
+Route::post('/user/reg','User\IndexController@doReg');      //注册
+
+Route::get('/user/login','User\IndexController@login');      //登录
+Route::post('/user/login','User\IndexController@doLogin');      //登录
+Route::get('/user/center','User\IndexController@center');      //个人中心

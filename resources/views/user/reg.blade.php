@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="/css/animate.css">
 	<link rel="stylesheet" href="/css/style.css">
 	
-	<link rel="shortcut icon" href="img/favicon.png">
+	<link rel="shortcut icon" href="/img/favicon.png">
 
 </head>
 <body>
@@ -47,7 +47,7 @@
 			<li><a href="setting.html"><i class="fa fa-cog"></i>Settings</a></li>
 			<li><a href="about-us.html"><i class="fa fa-user"></i>About Us</a></li>
 			<li><a href="contact.html"><i class="fa fa-envelope-o"></i>Contact Us</a></li>
-			<li><a href="login.html"><i class="fa fa-sign-in"></i>Login</a></li>
+			<li><a href="/user/login"><i class="fa fa-sign-in"></i>Login</a></li>
 			<li><a href="register.html"><i class="fa fa-user-plus"></i>Register</a></li>
 		</ul>
 	</div>
@@ -371,18 +371,26 @@
 			</div>
 			<div class="register">
 				<div class="row">
-					<form class="col s12">
-						<div class="input-field">
-							<input type="text" class="validate" placeholder="NAME" required>
-						</div>
-						<div class="input-field">
-							<input type="email" placeholder="EMAIL" class="validate" required>
-						</div>
-						<div class="input-field">
-							<input type="password" placeholder="PASSWORD" class="validate" required>
-						</div>
-						<div class="btn button-default">REGISTER</div>
-					</form>
+				<form class="col s12" action="/user/reg" method="post">
+                    {{csrf_field()}}
+                    <div class="input-field">
+                        <input name="name"   type="text" class="validate" placeholder="NAME" required>
+                    </div>
+                    <div class="input-field">
+                        <input name="email" type="email" placeholder="EMAIL" class="validate" required>
+					</div>
+					<div class="input-field">
+                        <input name="mobile" type="text" placeholder="手机号" class="validate" required>
+                    </div>
+                    <div class="input-field">
+                        <input name="pass1" type="password" placeholder="密码" class="validate" required>
+                    </div>
+                    <div class="input-field">
+                        <input name="pass2" type="password" placeholder="确认密码" class="validate" required>
+                    </div>
+                    <input type="submit" class="btn button-default" value="REGISTER">
+					{{--<div class="btn button-default">REGISTER</div>--}}
+                </form>
 				</div>
 			</div>
 		</div>
