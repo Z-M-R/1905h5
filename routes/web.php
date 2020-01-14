@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/','Index\IndexController@index'); //网站首页
+
+Route::get('/user/reg','User\IndexController@reg'); //首页
