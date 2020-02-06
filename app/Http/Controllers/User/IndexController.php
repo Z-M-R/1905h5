@@ -16,39 +16,43 @@ class IndexController extends Controller
          return view('user.reg');
      }
 
-     /**
+    /**
      * 用户注册
      */
     public function doReg()
     {
         unset($_POST['_token']);
-        // echo '<pre>';print_r($_POST);echo '</pre>';
+        //echo '<pre>';print_r($_POST);echo '</pre>';
         //请求passport注册
         $url = 'http://passport.1905.com/api/user/reg';
         $client = new Client();
         $response = $client->request('post',$url,[
-            'form_params'   => $_POST
+            'form_params'   => $_POST                   // form-data 格式
+            //'body'   => json_encdoe($_POST)           // raw 格式
         ]);
         $json_data = $response->getBody();
         $info = json_decode($json_data,true);
-        // echo '<pre>';print_r($info);echo '</pre>';
+        //echo '<pre>';print_r($info);echo '</pre>';
         //判断结果
         if($info['errno']){
-            header('Refresh:2;url=/user/reg');            //页面跳转
-            // echo "错误信息：" . $info['msg'] . " 正在跳转>>>>";
-            // die;
-        }else{
-            header('Refresh:2;url=/user/login'); 
+            //header('Refresh:2;url=/user/reg');            //页面跳转
+            echo "错误信息：" . $info['msg'] . " 正在跳转>>>>";
+            die;
         }
     }
 
-     //登录
-     public function login()
-     {
-         return view('user.login');
-     }
 
-     /**
+    /**
+     * 登录
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function login()
+    {
+        return view('user.login');
+    }
+
+
+    /**
      * 登录
      */
     public function doLogin()
@@ -74,10 +78,12 @@ class IndexController extends Controller
         //将 token 保存至 客户端 cookie 中
         Cookie::queue('token',$token,600);
         Cookie::queue('uid',$uid,600);
+        setcookie('testtoken','abcdefg',time()+3600);
         //登录成功
         header('Refresh:2;url=/user/center');
         echo "登录成功，正在跳转至个人中心";
     }
+
 
     /**
      * 个人中心
@@ -87,12 +93,13 @@ class IndexController extends Controller
         $token = Cookie::get('token');
         $uid = Cookie::get('uid');
         if(empty($token) || empty($uid)){
-            header('Refresh:2;url=/user/login');
+            header('Refresh:2;url=/user/login');        //两秒跳转
             echo "请先登录, 页面跳转中";
             die;
         }
         //请求passport 鉴权
         $url = 'http://passport.1905.com/api/auth';
+        // $url = 'http://passport.zmrzzj.com/api/auth';
         $client = new Client();
         $response = $client->request('post',$url,[
             'form_params'   => ['uid'=>$uid,'token'=>$token]
@@ -105,6 +112,8 @@ class IndexController extends Controller
             echo "错误信息： ". $info['msg'];
             die;
         }
+
+
         //个人中心
         echo "欢迎来到个人中心";
     }
